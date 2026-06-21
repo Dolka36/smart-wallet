@@ -1,27 +1,19 @@
+import java.util.ArrayList;
+
 public class Account {
     private int id;
     private String title;
     protected int balance;
-    protected Transaction[] transactions;
-    protected int transactionCount;
+    protected ArrayList<Transaction> transactions;
 
     public Account(int id, String title) {
         this.id = id;
         this.title = title;
         this.balance = 0;
-        this.transactionCount = 0;
-        this.transactions = new Transaction[5];
+        this.transactions = new ArrayList<>();
     }
 
-
     public void addTransaction(Transaction transaction) {
-        if (transactionCount == transactions.length) {
-            Transaction[] newTransactions = new Transaction[transactions.length * 2];
-            for (int i = 0; i < transactions.length; i++) {
-                newTransactions[i] = transactions[i];
-            }
-            this.transactions = newTransactions;
-        }
         if (transaction.getType().equalsIgnoreCase("доход")) {
             balance += transaction.getAmount();
         } else if (transaction.getType().equalsIgnoreCase("расход")) {
@@ -29,42 +21,24 @@ public class Account {
         } else {
             throw new IllegalArgumentException("Неправильная операция! Введите доход/расход");
         }
-        transactions[transactionCount] = transaction;
-        transactionCount++;
+
+        transactions.add(transaction);
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getBalance() {
-        return balance;
-    }
+    public int getId() { return id; }
+    public String getTitle() { return title; }
+    public int getBalance() { return balance; }
 
     public int getTransactionCount() {
-        return transactionCount;
+        return transactions.size();
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setTransactionCount(int transactionCount) {
-        this.transactionCount = transactionCount;
-    }
+    public void setId(int id) { this.id = id; }
+    public void setTitle(String title) { this.title = title; }
 
     @Override
     public String toString() {
         double displayBalance = balance / 100.0;
-
         return String.format("ID: %s, Название: %s, баланс: %.2f", id, title, displayBalance);
     }
 }
