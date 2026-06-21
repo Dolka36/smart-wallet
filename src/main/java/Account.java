@@ -1,9 +1,9 @@
 public class Account {
     private int id;
     private String title;
-    private int balance;
-    Transaction[] transactions;
-    private int transactionCount;
+    protected int balance;
+    protected Transaction[] transactions;
+    protected int transactionCount;
 
     public Account(int id, String title) {
         this.id = id;

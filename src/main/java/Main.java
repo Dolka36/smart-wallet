@@ -2,24 +2,30 @@ public class Main {
     public static void main(String[] args) {
         Wallet wallet = new Wallet("Иван");
 
-        Account mainAccount = new Account(1, "Основной");
+        // 1. Создаем три РАЗНЫХ типа счета
+        Account debit = new DebitAccount(1, "Дебетовая карта");
+        Account credit = new CreditAccount(2, "Кредитка", 10000_00); // Лимит 10 000 рублей
+        Account invest = new InvestmentAccount(3, "Брокерский счет");
 
-        mainAccount.addTransaction(new Transaction(10000, "доход", "RUB", "Зарплата"));
-        mainAccount.addTransaction(new Transaction(1000, "доход", "RUB", "Премия"));
-        mainAccount.addTransaction(new Transaction(50000, "доход", "RUB", "Акции"));
-        mainAccount.addTransaction(new Transaction(5000, "расход", "RUB", "Развлечения"));
-        mainAccount.addTransaction(new Transaction(100, "расход", "RUB", "Пончик"));
-        mainAccount.addTransaction(new Transaction(10000, "расход", "RUB", "Кредит"));
+        // 2. Добавляем их в кошелек
+        wallet.addAccount(debit);
+        wallet.addAccount(credit);
+        wallet.addAccount(invest);
 
+        System.out.println("=== ТЕСТ 1: ДЕБЕТОВЫЙ СЧЕТ ===");
+        debit.addTransaction(new Transaction(5000_00, "доход", "RUB", "Пополнение"));
+        debit.addTransaction(new Transaction(6000_00, "расход", "RUB", "Покупка куртки")); // Должна быть ошибка!
 
-        wallet.addAccount(mainAccount);
+        System.out.println("\n=== ТЕСТ 2: КРЕДИТНЫЙ СЧЕТ ===");
+        credit.addTransaction(new Transaction(5000_00, "расход", "RUB", "Покупка продуктов")); // Уйдет в минус, но это разрешено
+        credit.addTransaction(new Transaction(6000_00, "расход", "RUB", "Покупка кроссовок")); // Должна быть ошибка (превысим лимит)!
 
-        System.out.println(mainAccount);
+        System.out.println("\n=== ТЕСТ 3: ИНВЕСТИЦИОННЫЙ СЧЕТ ===");
+        invest.addTransaction(new Transaction(2000_00, "доход", "RUB", "Покупка акций"));
+        invest.addTransaction(new Transaction(500_00, "расход", "RUB", "Вывод денег")); // Должна быть ошибка!
 
-
-        System.out.println("Первая транзакция: " + mainAccount.transactions[0]);
-
-
+        System.out.println("\n=================================");
+        // Выводим финальное состояние кошелька
         System.out.println(wallet);
     }
 }
