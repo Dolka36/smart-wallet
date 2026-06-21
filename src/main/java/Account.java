@@ -21,20 +21,13 @@ public class Account {
         } else {
             throw new IllegalArgumentException("Неправильная операция! Введите доход/расход");
         }
-
         transactions.add(transaction);
     }
 
     public int getId() { return id; }
     public String getTitle() { return title; }
     public int getBalance() { return balance; }
-
-    public int getTransactionCount() {
-        return transactions.size();
-    }
-
-    public void setId(int id) { this.id = id; }
-    public void setTitle(String title) { this.title = title; }
+    public int getTransactionCount() { return transactions.size(); }
 
     @Override
     public String toString() {

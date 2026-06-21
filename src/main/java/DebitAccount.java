@@ -1,5 +1,4 @@
 public class DebitAccount extends Account {
-
     public DebitAccount(int id, String title) {
         super(id, title);
     }

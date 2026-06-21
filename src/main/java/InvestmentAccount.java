@@ -1,5 +1,4 @@
 public class InvestmentAccount extends Account {
-
     public InvestmentAccount(int id, String title) {
         super(id, title);
     }
